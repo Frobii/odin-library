@@ -1,0 +1,27 @@
+{
+  "name": "odin-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Frobii/odin-library.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Frobii/odin-library/issues"
+  },
+  "homepage": "https://github.com/Frobii/odin-library#readme",
+  "devDependencies": {
+    "eslint": "^8.38.0",
+    "eslint-config-wesbos": "^3.2.3",
+    "prettier": "^2.8.7",
+    "typescript": "^4.9.5"
+  }
+}
