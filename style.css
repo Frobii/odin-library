@@ -1,13 +1,26 @@
 body {
     margin: 0px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 h1 {
     display: flex;
     align-items: center;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 3rem;
     color: rgba(0, 0, 0, 0.743);
+    font-weight: 600;
+}
+
+table {
+    border-bottom: rgba(0, 0, 0, 0.211) 2px solid;
+    color: rgba(0, 0, 0, 0.743);
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+}
+
+th {
+    text-align: left;
 }
 
 .header {
@@ -18,3 +31,6 @@ h1 {
     box-shadow:0px -2px 13px -1px rgba(0,0,0,0.75);
 }
 
+.main {
+    margin-top: 20px;
+}
