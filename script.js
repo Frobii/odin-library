@@ -35,10 +35,17 @@ addBookToLibrary(
 );
 
 addBookToLibrary(
+  'Thinking Fast and Slow',
+  'Daniel Kahneman',
+  '499',
+  'Not Started'
+);
+
+addBookToLibrary(
   'Think Like A Programmer',
   'V. Anton Spraul',
   '256',
-  'Ongoing'
+  'In Progress'
 );
 
 populateTable(myLibrary, bookTable);

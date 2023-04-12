@@ -11,6 +11,23 @@ h1 {
     font-weight: 600;
 }
 
+form {
+    width: 40vw;
+    margin-left: 10vw;
+    margin-right: 50vw;
+    margin-bottom: 30px;
+}
+
+fieldset {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    row-gap: 10px;
+}
+
+input, select, button {
+    width: 80%;
+}
+
 table {
     border-bottom: rgba(0, 0, 0, 0.211) 2px solid;
     color: rgba(0, 0, 0, 0.743);
