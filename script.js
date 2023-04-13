@@ -23,7 +23,7 @@ function populateData(row, item) {
   statusCell.textContent = item.readingStatus;
 }
 
-function createDeleteButton(row, item, library = myLibrary) {
+function createDeleteButton(row, item, library = myLibrary, table = bookTable) {
   const deleteButton = document.createElement('button');
   const deleteButtonCell = row.insertCell();
 
@@ -32,10 +32,19 @@ function createDeleteButton(row, item, library = myLibrary) {
   deleteButton.innerText = 'Delete';
   deleteButton.className = 'delete';
 
-  const index = library.indexOf(item);
+  const id = item.title + item.author;
+  row.setAttribute('data-id', id);
 
-  deleteButton.setAttribute('index', index);
-  deleteButton.setAttribute('onclick', `deleteBook(${index})`);
+  deleteButton.addEventListener('click', () => {
+    const rowToDelete = document.querySelector(`[data-id="${id}"]`);
+    const index = Array.from(table.rows).indexOf(rowToDelete) - 1;
+    deleteBook(index);
+  });
+}
+
+function deleteBook(index, library = myLibrary, table = bookTable) {
+  library.splice(index, 1);
+  table.deleteRow(index + 1);
 }
 
 function populateTable(library = myLibrary, table = bookTable) {
