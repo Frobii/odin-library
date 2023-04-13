@@ -13,6 +13,31 @@ function addBookToLibrary(title, author, read) {
   myLibrary.push(new Book(title, author, read));
 }
 
+function populateData(row, item) {
+  const titleCell = row.insertCell();
+  const authorCell = row.insertCell();
+  const statusCell = row.insertCell();
+
+  titleCell.textContent = item.title;
+  authorCell.textContent = item.author;
+  statusCell.textContent = item.readingStatus;
+}
+
+function createDeleteButton(row, item, library = myLibrary) {
+  const deleteButton = document.createElement('button');
+  const deleteButtonCell = row.insertCell();
+
+  deleteButtonCell.appendChild(deleteButton);
+
+  deleteButton.innerText = 'Delete';
+  deleteButton.className = 'delete';
+
+  const index = library.indexOf(item);
+
+  deleteButton.setAttribute('index', index);
+  deleteButton.setAttribute('onclick', `deleteBook(${index})`);
+}
+
 function populateTable(library = myLibrary, table = bookTable) {
   library.forEach((item) => {
     if (item.itemised) {
@@ -21,14 +46,9 @@ function populateTable(library = myLibrary, table = bookTable) {
 
     const row = table.insertRow();
 
-    const titleCell = row.insertCell();
-    titleCell.textContent = item.title;
+    populateData(row, item);
 
-    const authorCell = row.insertCell();
-    authorCell.textContent = item.author;
-
-    const statusCell = row.insertCell();
-    statusCell.textContent = item.readingStatus;
+    createDeleteButton(row, item);
 
     item.itemised = true;
   });

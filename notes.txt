@@ -1,0 +1,4 @@
+set a data attribute for each button as the items index
+fetch the index in the delete function
+remove it from both the array and HTML table
+access each button's index data attribute and -1 from them
