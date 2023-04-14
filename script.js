@@ -19,7 +19,8 @@ Book.prototype.changeStatus = function () {
   }
   const id = this.title + this.author;
   const rowToAlter = document.querySelector(`[data-id="${id}"]`);
-  rowToAlter.cells[2].textContent = this.readingStatus;
+  rowToAlter.cells[2].querySelector('.status-button').textContent =
+    this.readingStatus;
 };
 
 function addBookToLibrary(title, author, read) {
@@ -29,11 +30,23 @@ function addBookToLibrary(title, author, read) {
 function populateData(row, item) {
   const titleCell = row.insertCell();
   const authorCell = row.insertCell();
-  const statusCell = row.insertCell();
 
   titleCell.textContent = item.title;
   authorCell.textContent = item.author;
-  statusCell.textContent = item.readingStatus;
+}
+
+function createStatusButton(row, item, library = myLibrary, table = bookTable) {
+  const statusButton = document.createElement('button');
+  const statusButtonCell = row.insertCell();
+
+  statusButtonCell.appendChild(statusButton);
+
+  statusButton.innerText = item.readingStatus;
+  statusButton.className = 'status-button';
+
+  statusButton.addEventListener('click', () => {
+    item.changeStatus();
+  });
 }
 
 function createDeleteButton(row, item, library = myLibrary, table = bookTable) {
@@ -69,6 +82,8 @@ function populateTable(library = myLibrary, table = bookTable) {
     const row = table.insertRow();
 
     populateData(row, item);
+
+    createStatusButton(row, item);
 
     createDeleteButton(row, item);
 
@@ -113,4 +128,4 @@ addBookToLibrary('Think Like A Programmer', 'V. Anton Spraul', 'In Progress');
 
 populateTable();
 
-myLibrary[0].changeStatus();
+// myLibrary[0].changeStatus();
