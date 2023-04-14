@@ -9,6 +9,19 @@ function Book(title, author, readingStatus, itemised) {
   this.itemised = false;
 }
 
+Book.prototype.changeStatus = function () {
+  if (this.readingStatus === 'Read') {
+    this.readingStatus = 'Not Read';
+  } else if (this.readingStatus === 'Not Read') {
+    this.readingStatus = 'In Progress';
+  } else if (this.readingStatus === 'In Progress') {
+    this.readingStatus = 'Read';
+  }
+  const id = this.title + this.author;
+  const rowToAlter = document.querySelector(`[data-id="${id}"]`);
+  rowToAlter.cells[2].textContent = this.readingStatus;
+};
+
 function addBookToLibrary(title, author, read) {
   myLibrary.push(new Book(title, author, read));
 }
@@ -99,3 +112,5 @@ addBookToLibrary('Thinking Fast and Slow', 'Daniel Kahneman', 'Not Read');
 addBookToLibrary('Think Like A Programmer', 'V. Anton Spraul', 'In Progress');
 
 populateTable();
+
+myLibrary[0].changeStatus();
