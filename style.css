@@ -50,18 +50,35 @@ form {
     position: absolute;
     display: grid;
     background-color: #ccecf3;
-    grid-template-rows: repeat(1fr, 4);
     grid-template-columns: 1fr 1fr;
     left: 50%;
-    margin-left: -150px;
+    margin-left: -175px;
     top: 50%;
-    margin-top: -150px;
+    margin-top: -100px;
     row-gap: 10px;
     padding: 20px;
-    width: 300px;
-    height: 300px;
+    padding-top: 40px;
+    width: 350px;
+    height: 200px;
     align-self: center;
     animation: fade-in 1s;
+}
+
+option, select, input {
+    background-color: white;
+    font-size: 18px;
+}
+
+.submit-button {
+    background-color: #4ad0ee9d;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.submit-button:hover {
+    background-color: #12c6ee;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 @keyframes fade-in {
@@ -75,13 +92,17 @@ form {
 
 legend {
     position: absolute;
-    justify-self: center
+    justify-self: center;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 label {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 fieldset, input, select, button {
