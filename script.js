@@ -2,6 +2,10 @@ const myLibrary = [];
 const bookTable = document.getElementById('book-table');
 const form = document.getElementById('book-form');
 
+const popUpButton = document.querySelector('.popup-button');
+const popUp = document.querySelector('.popup');
+const popUpOverlay = document.querySelector('.popup-overlay');
+
 function Book(title, author, readingStatus, itemised) {
   this.title = title;
   this.author = author;
@@ -118,14 +122,20 @@ function submitForm(event) {
   }
 }
 
+popUpButton.addEventListener('click', () => {
+  popUp.style.display = 'block';
+  popUpOverlay.style.display = 'block';
+});
+
+popUpOverlay.addEventListener('click', () => {
+  popUp.style.display = 'none';
+  popUpOverlay.style.display = 'none';
+});
+
 form.addEventListener('submit', submitForm);
 
 addBookToLibrary('Where The Wild Things Are', 'Mauriece Sendak', 'Read');
-
 addBookToLibrary('Thinking Fast and Slow', 'Daniel Kahneman', 'Not Read');
-
 addBookToLibrary('Think Like A Programmer', 'V. Anton Spraul', 'In Progress');
 
 populateTable();
-
-// myLibrary[0].changeStatus();
