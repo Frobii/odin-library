@@ -12,7 +12,7 @@ h1 {
 }
 
 .popup-button {
-    height: 50px;
+    height: 60px;
     width: 120px;
     align-self: center;
     background-color: rgba(33, 190, 33, 0.316);
@@ -50,6 +50,9 @@ form {
     position: absolute;
     display: grid;
     background-color: #ccecf3;
+    border-top: 20px;
+    border-color: #ccecf3;
+    border-style: solid;
     grid-template-columns: 1fr 1fr;
     left: 50%;
     margin-left: -175px;
@@ -111,13 +114,13 @@ fieldset, input, select, button {
 }
 
 .delete, .status-button {
-    width: 100%;
+    width: 100px;
     height: 30px;
+    color: white;
 }
 
 .status-button {
     background-color: #4ad0ee;
-    color: white;
 }
 
 .status-button:hover {
@@ -126,7 +129,7 @@ fieldset, input, select, button {
 
 .delete {
     background-color: rgba(244, 59, 59, 0.734);
-    color: white;
+    float: right;
 }
 
 .delete:hover {
@@ -134,7 +137,9 @@ fieldset, input, select, button {
 }
 
 table {
-    border-bottom: rgba(0, 0, 0, 0.211) 2px solid;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    border-bottom: rgba(0, 0, 0, 0.099) 4px solid;
     color: rgba(0, 0, 0, 0.743);
     width: 80vw;
     margin-left: 10vw;
@@ -150,7 +155,7 @@ th {
 }
 
 .header {
-    height: 100px;
+    height: 110px;
     display: flex;
     justify-content: space-between;
     padding-left: 30px;
@@ -160,5 +165,5 @@ th {
 }
 
 .main {
-    margin-top: 20px;
+    margin-top: 40px;
 }
