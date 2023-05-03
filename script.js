@@ -29,16 +29,23 @@ class Book {
   }
 }
 
-function addBookToLibrary(title, author, read) {
-  myLibrary.push(new Book(title, author, read));
-}
+class Library {
+  constructor() {
+    this.books = [];
+  }
 
-function populateData(row, item) {
-  const titleCell = row.insertCell();
-  const authorCell = row.insertCell();
+  addBookToLibrary(title, author, read) {
+    this.books.push(new Book(title, author, read));
+  }
 
-  titleCell.textContent = item.title;
-  authorCell.textContent = item.author;
+  populateData(row, item) {
+    const titleCell = row.insertCell();
+    const authorCell = row.insertCell();
+  
+    titleCell.textContent = item.title;
+    authorCell.textContent = item.author;
+  }
+
 }
 
 function createStatusButton(row, item, library = myLibrary, table = bookTable) {
