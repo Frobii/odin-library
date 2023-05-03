@@ -38,6 +38,59 @@ class Library {
     this.books.push(new Book(title, author, read));
   }
 
+  deleteBook(index, library = myLibrary, table = bookTable) {
+    library.splice(index, 1);
+    table.deleteRow(index + 1);
+  }
+
+  checkDuplicate(library, title, author) {
+    let duplicateFound = false;
+  
+    library.forEach((item) => {
+      if (item.title === title && item.author === author) {
+        duplicateFound = true;
+      }
+    });
+  
+    return duplicateFound;
+  }
+
+  populateTable(library = myLibrary, table = bookTable) {
+    library.forEach((item) => {
+      if (item.itemised) {
+        return;
+      }
+  
+      const row = table.insertRow();
+  
+      populateData(row, item);
+  
+      createStatusButton(row, item);
+  
+      createDeleteButton(row, item);
+  
+      item.itemised = true;
+    });
+  }
+
+  submitForm(event) {
+    event.preventDefault();
+  
+    const formData = new FormData(document.getElementById('book-form'));
+  
+    const title = formData.get('title');
+    const author = formData.get('author');
+    const readingStatus = formData.get('reading-status');
+  
+    if (!checkDuplicate(myLibrary, title, author) && title !== '') {
+      addBookToLibrary(title, author, readingStatus);
+      populateTable();
+    }
+  }
+
+}
+
+class Table {
   populateData(row, item) {
     const titleCell = row.insertCell();
     const authorCell = row.insertCell();
@@ -46,88 +99,51 @@ class Library {
     authorCell.textContent = item.author;
   }
 
-}
+  createStatusButton(row, item, library = myLibrary, table = bookTable) {
+    const statusButton = document.createElement('button');
+    const statusButtonCell = row.insertCell();
+  
+    statusButtonCell.appendChild(statusButton);
+  
+    statusButton.innerText = item.readingStatus;
+    statusButton.className = 'status-button';
+  
+    statusButton.addEventListener('click', () => {
+      item.changeStatus();
+    });
+  }
 
-function createStatusButton(row, item, library = myLibrary, table = bookTable) {
-  const statusButton = document.createElement('button');
-  const statusButtonCell = row.insertCell();
+  createStatusButton(row, item, library = myLibrary, table = bookTable) {
+    const statusButton = document.createElement('button');
+    const statusButtonCell = row.insertCell();
+  
+    statusButtonCell.appendChild(statusButton);
+  
+    statusButton.innerText = item.readingStatus;
+    statusButton.className = 'status-button';
+  
+    statusButton.addEventListener('click', () => {
+      item.changeStatus();
+    });
+  }
 
-  statusButtonCell.appendChild(statusButton);
-
-  statusButton.innerText = item.readingStatus;
-  statusButton.className = 'status-button';
-
-  statusButton.addEventListener('click', () => {
-    item.changeStatus();
-  });
-}
-
-function createDeleteButton(row, item, library = myLibrary, table = bookTable) {
-  const deleteButton = document.createElement('button');
-  const deleteButtonCell = row.insertCell();
-
-  deleteButtonCell.appendChild(deleteButton);
-
-  deleteButton.innerText = 'Delete';
-  deleteButton.className = 'delete';
-
-  const id = item.title + item.author;
-  row.setAttribute('data-id', id);
-
-  deleteButton.addEventListener('click', () => {
-    const rowToDelete = document.querySelector(`[data-id="${id}"]`);
-    const index = Array.from(table.rows).indexOf(rowToDelete) - 1;
-    deleteBook(index);
-  });
-}
-
-function deleteBook(index, library = myLibrary, table = bookTable) {
-  library.splice(index, 1);
-  table.deleteRow(index + 1);
-}
-
-function populateTable(library = myLibrary, table = bookTable) {
-  library.forEach((item) => {
-    if (item.itemised) {
-      return;
-    }
-
-    const row = table.insertRow();
-
-    populateData(row, item);
-
-    createStatusButton(row, item);
-
-    createDeleteButton(row, item);
-
-    item.itemised = true;
-  });
-}
-
-function checkDuplicate(library, title, author) {
-  let duplicateFound = false;
-
-  library.forEach((item) => {
-    if (item.title === title && item.author === author) {
-      duplicateFound = true;
-    }
-  });
-
-  return duplicateFound;
-}
-
-function submitForm(event) {
-  event.preventDefault();
-
-  const formData = new FormData(document.getElementById('book-form'));
-
-  const title = formData.get('title');
-  const author = formData.get('author');
-  const readingStatus = formData.get('reading-status');
-
-  if (!checkDuplicate(myLibrary, title, author) && title !== '') {
-    addBookToLibrary(title, author, readingStatus);
-    populateTable();
+  createDeleteButton(row, item, library = myLibrary, table = bookTable) {
+    const deleteButton = document.createElement('button');
+    const deleteButtonCell = row.insertCell();
+  
+    deleteButtonCell.appendChild(deleteButton);
+  
+    deleteButton.innerText = 'Delete';
+    deleteButton.className = 'delete';
+  
+    const id = item.title + item.author;
+    row.setAttribute('data-id', id);
+  
+    deleteButton.addEventListener('click', () => {
+      const rowToDelete = document.querySelector(`[data-id="${id}"]`);
+      const index = Array.from(table.rows).indexOf(rowToDelete) - 1;
+      deleteBook(index);
+    });
   }
 }
 
