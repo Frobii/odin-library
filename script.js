@@ -6,26 +6,28 @@ const popUpButton = document.querySelector('.popup-button');
 const popUp = document.querySelector('.popup');
 const popUpOverlay = document.querySelector('.popup-overlay');
 
-function Book(title, author, readingStatus, itemised) {
-  this.title = title;
-  this.author = author;
-  this.readingStatus = readingStatus;
-  this.itemised = false;
-}
-
-Book.prototype.changeStatus = function () {
-  if (this.readingStatus === 'Read') {
-    this.readingStatus = 'Not Read';
-  } else if (this.readingStatus === 'Not Read') {
-    this.readingStatus = 'In Progress';
-  } else if (this.readingStatus === 'In Progress') {
-    this.readingStatus = 'Read';
+class Book {
+  constructor(title, author, readingStatus, itemised = false) {
+    this.title = title;
+    this.author = author;
+    this.readingStatus = readingStatus;
+    this.itemised = false;
   }
-  const id = this.title + this.author;
-  const rowToAlter = document.querySelector(`[data-id="${id}"]`);
-  rowToAlter.cells[2].querySelector('.status-button').textContent =
-    this.readingStatus;
-};
+
+  changeStatus() {
+    if (this.readingStatus === 'Read') {
+      this.readingStatus = 'Not Read';
+    } else if (this.readingStatus === 'Not Read') {
+      this.readingStatus = 'In Progress';
+    } else if (this.readingStatus === 'In Progress') {
+      this.readingStatus = 'Read';
+    }
+    const id = this.title + this.author;
+    const rowToAlter = document.querySelector(`[data-id="${id}"]`);
+    rowToAlter.cells[2].querySelector('.status-button').textContent =
+      this.readingStatus;
+  }
+}
 
 function addBookToLibrary(title, author, read) {
   myLibrary.push(new Book(title, author, read));
