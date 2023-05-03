@@ -1,4 +1,3 @@
-const myLibrary = [];
 const bookTable = document.getElementById('book-table');
 const form = document.getElementById('book-form');
 
@@ -30,20 +29,19 @@ class Book {
 }
 
 class Library {
-  constructor() {
-    this.books = [];
-  }
+ 
+  static books = [];
 
-  addBookToLibrary(title, author, read) {
+  static addBookToLibrary(title, author, read) {
     this.books.push(new Book(title, author, read));
   }
 
-  deleteBook(index, library = myLibrary, table = bookTable) {
+  static deleteBook(index, library = this.books, table = bookTable) {
     library.splice(index, 1);
     table.deleteRow(index + 1);
   }
 
-  checkDuplicate(library, title, author) {
+  static checkDuplicate(library = this.books, title, author) {
     let duplicateFound = false;
   
     library.forEach((item) => {
@@ -55,7 +53,7 @@ class Library {
     return duplicateFound;
   }
 
-  populateTable(library = myLibrary, table = bookTable) {
+  static populateTable(library = this.books, table = bookTable) {
     library.forEach((item) => {
       if (item.itemised) {
         return;
@@ -63,7 +61,7 @@ class Library {
   
       const row = table.insertRow();
   
-      populateData(row, item);
+      Table.populateData(row, item);
   
       createStatusButton(row, item);
   
@@ -73,7 +71,7 @@ class Library {
     });
   }
 
-  submitForm(event) {
+  static submitForm(event) {
     event.preventDefault();
   
     const formData = new FormData(document.getElementById('book-form'));
@@ -82,7 +80,7 @@ class Library {
     const author = formData.get('author');
     const readingStatus = formData.get('reading-status');
   
-    if (!checkDuplicate(myLibrary, title, author) && title !== '') {
+    if (!checkDuplicate(this.books, title, author) && title !== '') {
       addBookToLibrary(title, author, readingStatus);
       populateTable();
     }
@@ -91,7 +89,7 @@ class Library {
 }
 
 class Table {
-  populateData(row, item) {
+  static populateData(row, item) {
     const titleCell = row.insertCell();
     const authorCell = row.insertCell();
   
