@@ -1,8 +1,8 @@
 const bookTable = document.getElementById('book-table');
 const form = document.getElementById('book-form');
 
-const popUpButton = document.querySelector('.popup-button');
 const popUp = document.querySelector('.popup');
+const popUpButton = document.querySelector('.popup-button');
 const popUpOverlay = document.querySelector('.popup-overlay');
 
 class Book {
@@ -10,7 +10,7 @@ class Book {
     this.title = title;
     this.author = author;
     this.readingStatus = readingStatus;
-    this.itemised = false;
+    this.itemised = itemised;
   }
 
   changeStatus() {
@@ -63,9 +63,9 @@ class Library {
   
       Table.populateData(row, item);
   
-      createStatusButton(row, item);
+      Table.createStatusButton(row, item);
   
-      createDeleteButton(row, item);
+      Table.createDeleteButton(row, item);
   
       item.itemised = true;
     });
@@ -79,10 +79,12 @@ class Library {
     const title = formData.get('title');
     const author = formData.get('author');
     const readingStatus = formData.get('reading-status');
+
+    const duplicate = Library.checkDuplicate(this.books, title, author)
   
-    if (!checkDuplicate(this.books, title, author) && title !== '') {
-      addBookToLibrary(title, author, readingStatus);
-      populateTable();
+    if (!duplicate && title !== '') {
+      Library.addBookToLibrary(title, author, readingStatus);
+      Library.populateTable();
     }
   }
 
@@ -97,7 +99,7 @@ class Table {
     authorCell.textContent = item.author;
   }
 
-  createStatusButton(row, item, library = myLibrary, table = bookTable) {
+  static createStatusButton(row, item, library = Library.books, table = bookTable) {
     const statusButton = document.createElement('button');
     const statusButtonCell = row.insertCell();
   
@@ -111,21 +113,7 @@ class Table {
     });
   }
 
-  createStatusButton(row, item, library = myLibrary, table = bookTable) {
-    const statusButton = document.createElement('button');
-    const statusButtonCell = row.insertCell();
-  
-    statusButtonCell.appendChild(statusButton);
-  
-    statusButton.innerText = item.readingStatus;
-    statusButton.className = 'status-button';
-  
-    statusButton.addEventListener('click', () => {
-      item.changeStatus();
-    });
-  }
-
-  createDeleteButton(row, item, library = myLibrary, table = bookTable) {
+  static createDeleteButton(row, item, table = bookTable) {
     const deleteButton = document.createElement('button');
     const deleteButtonCell = row.insertCell();
   
@@ -140,7 +128,7 @@ class Table {
     deleteButton.addEventListener('click', () => {
       const rowToDelete = document.querySelector(`[data-id="${id}"]`);
       const index = Array.from(table.rows).indexOf(rowToDelete) - 1;
-      deleteBook(index);
+      Library.deleteBook(index);
     });
   }
 }
@@ -155,10 +143,14 @@ popUpOverlay.addEventListener('click', () => {
   popUpOverlay.style.display = 'none';
 });
 
-form.addEventListener('submit', submitForm);
+form.addEventListener('submit', Library.submitForm);
 
-addBookToLibrary('Where The Wild Things Are', 'Mauriece Sendak', 'Read');
-addBookToLibrary('Thinking Fast and Slow', 'Daniel Kahneman', 'Not Read');
-addBookToLibrary('Think Like A Programmer', 'V. Anton Spraul', 'In Progress');
+whereTheWildThingsAre = new Book('Where The Wild Things Are', 'Mauriece Sendak', 'Read');
+thinkingFastAndSlow = new Book('Thinking Fast and Slow', 'Daniel Kahneman', 'Not Read');
+thinkLikeAProgrammer = new Book('Think Like A Programmer', 'V. Anton Spraul', 'In Progress')
 
-populateTable();
+Library.addBookToLibrary(whereTheWildThingsAre.title, whereTheWildThingsAre.author, whereTheWildThingsAre.readingStatus);
+Library.addBookToLibrary(thinkingFastAndSlow.title, thinkingFastAndSlow.author, thinkingFastAndSlow.readingStatus);
+Library.addBookToLibrary(thinkLikeAProgrammer.title, thinkLikeAProgrammer.author, thinkLikeAProgrammer.readingStatus);
+
+Library.populateTable();
